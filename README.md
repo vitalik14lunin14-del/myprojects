@@ -1,4 +1,4 @@
-# Wiki-Parser & Search
+# Wiki-Parser & Search ETL PIPELINE
 
 This application processes massive, raw Wikipedia dumps, cleans the text extracted from them, and stores the structured data into an optimized database for instantaneous article lookups.
 
