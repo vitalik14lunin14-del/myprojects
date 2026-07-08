@@ -1,26 +1,24 @@
 # Wiki-Parser & Search
 
-Эта программа берет огромный сырой файл Википедии, чистит его от мусора и сохраняет в удобную базу данных, по которой можно моментально искать нужные статьи.
+This application processes massive, raw Wikipedia dumps, cleans the text extracted from them, and stores the structured data into an optimized database for instantaneous article lookups.
 
 ---
 
-1. **Загрузка (`extract_dump.py`):** Скрипт читает большой файл Википедии по кусочкам, чтобы компьютер не завис.
-2. **Очистка (`transform_data.py`):** Программа находит текст статей, удаляет весь программный код, ссылки, теги и оставляет только чистый текст. Чтобы всё работало быстрее, задача делится на несколько ядер процессора одновременно.
-3. **Сохранение и Поиск (`load_data.py`):** Находит любое слово во всех миллионах статей.
+### Key Workflow
+
+1. **Extraction (`extract_dump.py`):** Streams and reads large Wikipedia dump files in chunks to prevent memory overflows.
+2. **Transformation (`transform_data.py`):** Extracts article content, strips code, links, and tags, leaving only clean text. To maximize performance, text processing is distributed across multiple CPU cores.
+3. **Loading & Search (`load_data.py`):** Performs ultra-fast, optimized search queries for keywords across millions of processed articles.
 
 ---
 
-* **`load_data.py`** — Точка входа в приложение. Запрашивает у пользователя категорию по которой будет искать статьи[cite: 1].
-* **`extract_dump.py`** — Скрипт для первичного разворачивания проекта из xml.bz2 архива.[cite: 1].
-* **`transform_data.py`** — Модуль «очистки». Запускает обработку текста. Он вырезает медиа-теги и обновляет колонку `clean_content` в базе данных[cite: 1].
-* **`database/utils/db_connector.py`** — Контекстные менеджеры для безопасного открытия сессий базы данных.[cite: 1].
-* **`database/utils/models.py`** — Валидирует типы данных, приходящие из базы. [cite: 1].
-* **`utils/create_index.py`** — Создает индекс для бд[cite: 1].
-* **`utils/hash_utils.py`** — Реализует хеш с солью[cite: 1].
-* **`utils/other_utils.py`** — Считает слова[cite: 1].
+### Project Structure & Modules
 
----
-
-```bash
-git clone [https://github.com/ТВОЙ_НИК/Wiki-Parser.git](https://github.com/ТВОЙ_НИК/Wiki-Parser.git)
-cd Wiki-Parser
+* **`load_data.py`** — The main entry point of the application. It prompts the user for a specific category to search articles.
+* **`extract_dump.py`** — The extraction script responsible for parsing and initializing the project from a raw `xml.bz2` archive.
+* **`transform_data.py`** — The text-cleaning module. It triggers distributed text processing, strips media tags, and updates the `clean_content` column in the database.
+* **`database/utils/db_connector.py`** — Context managers ensuring secure and safe database session management.
+* **`database/utils/models.py`** — Handles data type validation for records retrieved from the database.
+* **`utils/create_index.py`** — Builds database indices to speed up search queries.
+* **`utils/hash_utils.py`** — Implements salted hashing utilities.
+* **`utils/other_utils.py`** — A utility module handling word-counting logic.
